@@ -1,0 +1,22 @@
+{
+    "name": "alexisvs/php_simple_crud",
+    "autoload": {
+        "psr-4": {
+            "Alexisvs\\PhpSimpleCrud\\": "Public/",
+            "Class\\": "Class/",
+            "Public\\": "Views/",
+            "Router\\": "Router/",
+            "Views\\": "Views/",
+            "Controllers\\": "Controllers/",
+            "Source\\": "src/",
+            "Exceptions\\": "Exceptions/"
+        }
+    },
+    "authors": [
+        {
+            "name": "AlexisVS",
+            "email": "63750707+AlexisVS@users.noreply.github.com"
+        }
+    ],
+    "require": {}
+}
