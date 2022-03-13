@@ -24,7 +24,6 @@ class App
   {
     try {
       echo $this->router->resolve($this->requestUri);
-      echo 'after app router resolve';
     } catch (RouteNotFoundException $e) {
       echo $e->getMessage();
     }

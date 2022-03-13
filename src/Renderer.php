@@ -32,7 +32,6 @@ class Renderer
    */
   public static function make(string $viewPath, ?array $data = null): static
   {
-    echo "sqd";
     return new static($viewPath, $data);
   }
 

@@ -14,7 +14,6 @@ class HomeController
    */
   public function index(): Renderer
   {
-    echo 'In controller';
     return Renderer::make('home/index');
   }
 }

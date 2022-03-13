@@ -62,12 +62,6 @@ class Router
 
     if (is_array($action)) {
       [$className, $method] = $action;
-      echo "<br><br>";
-      var_dump($action);
-      echo "<br><br>";
-      var_dump(class_exists($className));
-      var_dump(method_exists($className, $method));
-      echo "<br><br>";
 
       if (class_exists($className) && method_exists($className, $method)) {
         $class = new $className();
@@ -85,15 +79,9 @@ class Router
    */
   public function resolve(string $uri): mixed
   {
-    echo 'router before resolve uri <br>';
     $path = $this->resolveUri($uri);
-    echo 'router after resolve uri <br>';
-    echo 'router before defineAction <br>';
+
     $action = $this->defineAction($path);
-
-    echo 'router after defineAction <br>';
-    echo 'router before executeActions <br>';
-
 
     return $this->executeActions($action);
   }
