@@ -2,6 +2,7 @@
 
 namespace Controllers;
 
+use Models\UserModel;
 use Source\Renderer;
 
 class HomeController
@@ -14,6 +15,13 @@ class HomeController
    */
   public function index(): Renderer
   {
-    return Renderer::make('home/index');
+    echo 'dsfsdf';
+    $user = new UserModel();
+    var_dump($user);
+    var_dump($user->find(1));
+    $data = [
+      'user' => $user->find(1)
+    ];
+    return Renderer::make('home/index', $data);
   }
 }
