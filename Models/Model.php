@@ -15,11 +15,11 @@ class Model
   /**
    * @var string $tableName
    */
-  // public $tableName;
+  public string $tableName;
 
-  // public function __construct() {
-  //     $tableName = strtolower(explode('\\', get_class($this))[1] . 's');
-  // }
+  public function __construct()
+  {
+  }
 
 
   /**
@@ -29,12 +29,11 @@ class Model
    */
   public function find(int $id): array|false
   {
-    echo 'in find model';
+    echo '<br> in find model <br><br>';
     $db = new Database();
-
+    var_dump($db);
     $query = "SELECT FROM $this->tableName WHERE id = $id";
-
-    var_dump($db->prepare($query)->fetchAll());
-    return $db->prepare($query)->fetchAll();
+    // var_dump($db->query($query));
+    return $db->query($query);
   }
 }

@@ -15,9 +15,10 @@ class HomeController
    */
   public function index(): Renderer
   {
-    echo 'dsfsdf';
     $user = new UserModel();
-    var_dump($user);
+    print_r($user); // TODO: le probleme est ici
+    // todo: n'arrive pas a call correctement le system
+    echo '<br>';
     var_dump($user->find(1));
     $data = [
       'user' => $user->find(1)
