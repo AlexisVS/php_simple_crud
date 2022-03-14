@@ -2,6 +2,7 @@
 
 namespace Router;
 
+use Controllers\HomeController;
 use Exceptions\RouteNotFoundException;
 
 class Router
@@ -25,7 +26,7 @@ class Router
   }
 
   /**
-   * Resolve Uri
+   * Resolve Uri and split uri and the query string
    * 
    * @param string $uri
    * @return string
@@ -65,6 +66,14 @@ class Router
 
       if (class_exists($className) && method_exists($className, $method)) {
         $class = new $className();
+        // TODO: systeme d' id au routes pour les models
+        // TODO: Si il y a des parametre a la route genre /user/{2}
+        // Todo: les stocker dans un tableau a balancer au constructeur du controller
+        // Todo: Comment faire pour enregistrer la route malgré qu'il y a un parametre dedans lors du register()
+        // Todo: genre /user/{id}
+        // * avec sprintf en mettant des %d ?
+        // * mais comment ? :)
+
         return call_user_func_array([$class, $method], []);
       }
     }
@@ -79,6 +88,7 @@ class Router
    */
   public function resolve(string $uri): mixed
   {
+    
     $path = $this->resolveUri($uri);
 
     $action = $this->defineAction($path);
