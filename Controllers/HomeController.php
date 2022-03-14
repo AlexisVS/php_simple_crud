@@ -13,13 +13,9 @@ class HomeController
    * 
    * @return Source\Renderer
    */
-  public function index(): Renderer
+  static public function index(): Renderer
   {
-    $user = new UserModel();
-    print_r($user); // TODO: le probleme est ici
-    // todo: n'arrive pas a call correctement le system
-    echo '<br>';
-    var_dump($user->find(1));
+    $user = new UserModel;
     $data = [
       'user' => $user->find(1)
     ];

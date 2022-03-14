@@ -2,13 +2,16 @@
 
 namespace Source;
 
+use Exceptions\BordelException;
 use PDO;
 use PDOException;
+use PDOStatement;
 
 class Database
 {
   /**
    * Database instance
+   * @var PDO $pdo
    */
   public PDO $pdo;
 
@@ -16,14 +19,19 @@ class Database
    * Connection data for Database
    * @var string $dsn
    */
-  public string $dsn = sprintf('mysql:host=%s;dbname=%s;', Constant::DB_HOST, Constant::DB_NAME);
+  public string $dsn;
+
+  /**
+   * @var PDOStatement|false $stmt
+   */
+  public PDOStatement|false $stmt;
 
   /**
    * Database connexion information
    */
   public function __construct()
   {
-    echo 'construct';
+    $this->dsn = sprintf('mysql:host=%s;dbname=%s;', Constant::DB_HOST, Constant::DB_NAME);
     $this->connexion();
   }
 
@@ -33,10 +41,16 @@ class Database
    */
   protected function connexion(): void
   {
-    echo 'connection';
     try {
-      static::$pdo = new PDO($this->dsn, Constant::DB_USER, Constant::DB_PASSWORD);
-      static::$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+      $this->pdo = new PDO($this->dsn, Constant::DB_USER, Constant::DB_PASSWORD, [
+        [
+          // Request a persistent connection, rather than creating a new connection.
+          PDO::ATTR_PERSISTENT => true,
+          // Throw a PDOException if an error occurs.
+          PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
+          // PDO::ERRMODE_EXCEPTION => true,
+        ]
+      ]);
     } catch (PDOException $e) {
       echo $e->getMessage();
       die();
@@ -48,12 +62,15 @@ class Database
    * 
    * @param string $query
    */
-  public function query(string $sql): array|false
+  public function executeQuery(string $sql): array|false
   {
-    echo 'dans query';
-    $query = $this->getInstance()->prepare($sql);
-    $query->execute();
-    return $query->fetchAll();
+    try {
+      $this->stmt = $this->getInstance()->prepare($sql);
+      $this->stmt->execute();
+      return $this->stmt->fetchAll();
+    } catch (PDOException $e) {
+      $e->getMessage();
+    }
   }
 
   /**
@@ -66,6 +83,6 @@ class Database
 
   protected function getInstance(): PDO
   {
-    return static::$pdo;
+    return $this->pdo;
   }
 }

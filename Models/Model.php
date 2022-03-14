@@ -10,7 +10,7 @@ class Model
   /**
    * Database instance
    */
-  public PDO $db;
+  public Database $db;
 
   /**
    * @var string $tableName
@@ -19,21 +19,28 @@ class Model
 
   public function __construct()
   {
+    $this->db = new Database();
   }
-
 
   /**
    * Query for specified request
    * 
    * @param int $id : id of the specified model
+   * @return array|false
    */
   public function find(int $id): array|false
   {
-    echo '<br> in find model <br><br>';
-    $db = new Database();
-    var_dump($db);
-    $query = "SELECT FROM $this->tableName WHERE id = $id";
-    // var_dump($db->query($query));
-    return $db->query($query);
+    $sql = "SELECT * FROM $this->tableName WHERE id = $id";
+    return $this->db->executeQuery($sql);
+  }
+
+  /**
+   * Take all row af the table
+   * @return array|false
+   */
+  public function all(): array|false
+  {
+    $sql = "SELECT * FROM $this->tableName";
+    return $this->db->executeQuery($sql);
   }
 }
