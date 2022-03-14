@@ -25,13 +25,23 @@ class Model
   /**
    * Query for specified request
    * 
-   * @param int $id : id of the specified model
+   * @param int|array $id : id or array of id of the specified model
    * @return array|false
    */
   public function find(int $id): array|false
   {
-    $sql = "SELECT * FROM $this->tableName WHERE id = $id";
-    return $this->db->executeQuery($sql);
+    if (is_array($id)) {
+      $sqlResponse = [];
+      foreach ($id as $item) {
+        $sql = "SELECT * FROM $this->tableName WHERE id = $item";
+        array_push($sqlResponse, $this->db->executeQuery($sql));
+      }
+      return $sqlResponse;
+    }
+    if (is_integer($id)) {
+      $sql = "SELECT * FROM $this->tableName WHERE id = $id";
+      return $this->db->executeQuery($sql);
+    }
   }
 
   /**
@@ -41,6 +51,17 @@ class Model
   public function all(): array|false
   {
     $sql = "SELECT * FROM $this->tableName";
+    return $this->db->executeQuery($sql);
+  }
+
+  /**
+   * Delete specifique id to the table
+   * @param int|array $id
+   * @return array|false
+   */
+  public function delete(int|array $id): array|false
+  {
+    $sql = "DELETE * FROM $this->tableName WHERE id = $id";
     return $this->db->executeQuery($sql);
   }
 }

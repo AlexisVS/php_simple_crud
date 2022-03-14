@@ -17,7 +17,8 @@ class HomeController
   {
     $user = new UserModel;
     $data = [
-      'user' => $user->find(1)
+      'user' => $user->find(1),
+      'users' => $user->all()
     ];
     return Renderer::make('home/index', $data);
   }
