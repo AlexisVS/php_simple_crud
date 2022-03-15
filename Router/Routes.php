@@ -1,3 +1,5 @@
 <?php
 
-$router->register('/', ['Controllers\HomeController', 'index']);
+use Source\Renderer;
+
+
