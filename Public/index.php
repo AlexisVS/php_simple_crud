@@ -10,11 +10,7 @@ require './../vendor/autoload.php';
 
 $router = new Router();
 
-$router->register('/', ['Controllers\HomeController', 'index']);
-$router->register('/dashboard/users/2/payments/25', function () {
-  return Renderer::make('router-test');
-});
-// include './../Router/Routes.php'
+include './../Router/Routes.php'
 
 ?>
 <!DOCTYPE html>
