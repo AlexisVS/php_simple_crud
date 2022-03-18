@@ -25,6 +25,7 @@ include './../Router/Routes.php'
 </head>
 
 <body class="bg-black-90 white-80 sans-serif">
+  <?php include_once('../Views/layout/navigation.php'); ?>
   <?php (new App($router, $_SERVER['REQUEST_URI']))->run(); ?>
 </body>
 

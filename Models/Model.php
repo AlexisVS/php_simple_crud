@@ -61,7 +61,9 @@ class Model
    */
   public function delete(int|array $id): array|false
   {
-    $sql = "DELETE * FROM $this->tableName WHERE id = $id";
+    echo $id;
+    var_dump($id);
+    $sql = "DELETE FROM $this->tableName WHERE id = $id";
     return $this->db->executeQuery($sql);
   }
 }

@@ -27,6 +27,7 @@ class Renderer
 
   /** Construct the view
    * @param string $viewPath
+   * exemple: "home/index"
    * @param array $data (optional)
    * @return Renderer view()
    */
@@ -37,7 +38,7 @@ class Renderer
 
   public function __toString()
   {
-    
+
     return $this->view();
   }
 }

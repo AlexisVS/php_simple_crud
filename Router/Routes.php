@@ -1,15 +1,11 @@
 <?php
 
-use Source\Renderer;
-
-
-
-$router->register('/dashboard/users/{userId}/payments/{paymentId}', function () {
-  return Renderer::make('router-test');
-});
-
-
-// $router->register('/dashboard/users/2/payments/25', function () {
-//   return Renderer::make('router-test');
-// });
 $router->register('/', ['Controllers\HomeController', 'index']);
+
+$router->register('/users/index', ['Controllers\UserController', 'index']);
+$router->register('/users/create', ['Controllers\UserController', 'create']);
+$router->register('/users/store', ['Controllers\UserController', 'store']);
+$router->register('/users/{userId}/show', ['Controllers\UserController', 'show']);
+$router->register('/users/{userId}/edit', ['Controllers\UserController', 'edit']);
+$router->register('/users/{userId}/update', ['Controllers\UserController', 'update']);
+$router->register('/users/{userId}/delete', ['Controllers\UserController', 'destroy']);

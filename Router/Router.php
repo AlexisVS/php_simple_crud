@@ -53,9 +53,7 @@ class Router
   private function getUriParameters(string $uri): array
   {
     $parameters = [];
-    // ? /dashboard/users/2/payments/25
-    // TODO: Si apres un mot il y a un '/' un numero et puis un '/'
-    // Todo: Enregistrer dans un tableau key:le_mot value:le_chiffre [user => 2, payment => 25]
+
     if (preg_match_all('/\d+/', $uri, $matches)) {
       $parameters = $matches[0];
     }
@@ -66,9 +64,9 @@ class Router
   /**
    *  Define if action is correct
    * @param string $path
-   * @return callable|array|null $action
+   * @return mixed $action
    */
-  private function defineAction(string $path, array $uriParameters): callable|array|null
+  private function defineAction(string $path, array $uriParameters): mixed
   {
     if (count($uriParameters) > 0) {
       $forMatchingPath = preg_replace('/\d+/', '%d', $path);
@@ -84,16 +82,20 @@ class Router
    * Define action For action array
    * 
    * @param array $action
-   * @param array|null $uriParameters
+   * @param mixed $uriParameters
    * @return mixed $action
    */
-  private function defineActionArrayForExecuteAction(array $action, array|null $uriParameters = null): mixed
+  private function defineActionArrayForExecuteAction(array $action, mixed $uriParameters): mixed
   {
     [$className, $method] = $action;
 
     if (class_exists($className) && method_exists($className, $method)) {
       $class = new $className();
-      return call_user_func_array([$class, $method], $uriParameters);
+      if ($uriParameters == null || count($uriParameters) == 0) {
+        return call_user_func_array([$class, $method], []);
+      } else {
+        return call_user_func_array([$class, $method, $uriParameters], []);
+      }
     }
     return new RouteNotFoundException();
   }
@@ -101,18 +103,19 @@ class Router
   /**
    * Execute the actions
    * 
-   * @param callable|array|null $action
+   * @param mixed $action
    * @param array $uriParameters
    * @return mixed
    */
-  private function executeAction(callable|array|null $action, array $uriParameters): mixed
+  private function executeAction(mixed $action, array $uriParameters): mixed
   {
     if (is_callable($action)) {
       return $action();
     }
-
     if (is_array($action)) {
-      $this->defineActionArrayForExecuteAction($action, $uriParameters);
+
+
+      return $this->defineActionArrayForExecuteAction($action, $uriParameters);
     }
     return new RouteNotFoundException();
   }
