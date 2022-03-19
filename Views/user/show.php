@@ -2,8 +2,6 @@
 
 use Source\Helper;
 
-
-var_dump($user);
 ?>
 
 <h1>show user</h1>

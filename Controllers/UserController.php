@@ -3,6 +3,8 @@
 namespace Controllers;
 
 use Models\UserModel;
+use Source\Constant;
+use Source\Helper;
 use Source\Renderer;
 
 class UserController
@@ -39,7 +41,12 @@ class UserController
    */
   static public function store()
   {
-    //
+    $store = new UserModel();
+    
+    // Totally stupid for security reason but this is a training project so ...
+    $store->store($_POST);
+
+    header('Location:' . Constant::PUBLIC_PATH . '/users/index');
   }
 
   /**
@@ -51,7 +58,6 @@ class UserController
   static public function show($id): Renderer
   {
     $user = new UserModel();
-    var_dump($user);
     $data = [
       'user' => $user->find($id),
     ];

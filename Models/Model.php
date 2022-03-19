@@ -40,7 +40,8 @@ class Model
     }
     if (is_integer($id)) {
       $sql = "SELECT * FROM $this->tableName WHERE id = $id";
-      return $this->db->executeQuery($sql);
+      // [0] for delete an useless array
+      return $this->db->executeQuery($sql)[0];
     }
   }
 
@@ -59,11 +60,35 @@ class Model
    * @param int|array $id
    * @return array|false
    */
-  public function delete(int|array $id): array|false
+  public function delete(int|array $id): string
   {
-    echo $id;
-    var_dump($id);
-    $sql = "DELETE FROM $this->tableName WHERE id = $id";
-    return $this->db->executeQuery($sql);
+    if (is_array($id)) {
+      foreach ($id as $item) {
+        $sql = "DELETE FROM $this->tableName WHERE id = $item";
+        $this->db->executeQuery($sql);
+        return 'All element has been successfully deleted.';
+      }
+    }
+    if (is_integer($id)) {
+      $sql = "DELETE FROM $this->tableName WHERE id = $id";
+      $this->db->executeQuery($sql);
+      return 'The element has been successfully deleted.';
+    }
+    return 'A problem has been occured.';
+  }
+
+  /**
+   * Store a new row in table
+   * 
+   * @param array $model
+   * @return array
+   */
+  public function store($model) {
+    $modelKeys = array_keys($model);
+    $modelValue = array_values($model);
+
+    $sql = "INSERT INTO $this->tableName ($modelKeys) VALUES ($modelValue)";
+    $this->db->executeQuery($sql);
+    return "The elemenet has been added.";
   }
 }

@@ -125,8 +125,6 @@ class Router
    */
   public function resolve(string $uri): mixed
   {
-    // var_dump($uri);
-    Helper::beautifful_print($this->routes);
 
     // Resolve Uri and split uri and the query string
     $path = $this->resolveUri($uri);
@@ -136,8 +134,6 @@ class Router
 
     // Define if action is correct
     $action = $this->defineAction($path, $uriParameters);
-
-    // var_dump($action);
 
     // Execute action
     return $this->executeAction($action, $uriParameters);
