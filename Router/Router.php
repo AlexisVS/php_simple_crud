@@ -74,7 +74,6 @@ class Router
     } else {
       $action = $this->routes[$path] ?? null;
     }
-
     return $action;
   }
 
@@ -82,19 +81,19 @@ class Router
    * Define action For action array
    * 
    * @param array $action
-   * @param mixed $uriParameters
+   * @param array $uriParameters
    * @return mixed $action
    */
-  private function defineActionArrayForExecuteAction(array $action, mixed $uriParameters): mixed
+  private function defineActionArrayForExecuteAction(array $action, array $uriParameters): mixed
   {
     [$className, $method] = $action;
 
     if (class_exists($className) && method_exists($className, $method)) {
       $class = new $className();
       if ($uriParameters == null || count($uriParameters) == 0) {
-        return call_user_func_array([$class, $method], []);
+        return call_user_func([$class, $method], []);
       } else {
-        return call_user_func_array([$class, $method, $uriParameters], []);
+        return call_user_func_array([$class, $method], $uriParameters);
       }
     }
     return new RouteNotFoundException();
@@ -110,11 +109,9 @@ class Router
   private function executeAction(mixed $action, array $uriParameters): mixed
   {
     if (is_callable($action)) {
-      return $action();
+      return $action(...$uriParameters);
     }
     if (is_array($action)) {
-
-
       return $this->defineActionArrayForExecuteAction($action, $uriParameters);
     }
     return new RouteNotFoundException();
@@ -128,6 +125,8 @@ class Router
    */
   public function resolve(string $uri): mixed
   {
+    // var_dump($uri);
+    // Helper::beautifful_print($this->routes);
     // Resolve Uri and split uri and the query string
     $path = $this->resolveUri($uri);
 
@@ -136,6 +135,8 @@ class Router
 
     // Define if action is correct
     $action = $this->defineAction($path, $uriParameters);
+
+    // var_dump($action);
 
     // Execute action
     return $this->executeAction($action, $uriParameters);

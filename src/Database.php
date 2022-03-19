@@ -2,7 +2,6 @@
 
 namespace Source;
 
-use Exceptions\BordelException;
 use PDO;
 use PDOException;
 use PDOStatement;
@@ -43,13 +42,11 @@ class Database
   {
     try {
       $this->pdo = new PDO($this->dsn, Constant::DB_USER, Constant::DB_PASSWORD, [
-        [
-          // Request a persistent connection, rather than creating a new connection.
-          PDO::ATTR_PERSISTENT => true,
-          // Throw a PDOException if an error occurs.
-          PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
-          // PDO::ERRMODE_EXCEPTION => true,
-        ]
+        // Request a persistent connection, rather than creating a new connection.
+        PDO::ATTR_PERSISTENT => true,
+        // Throw a PDOException if an error occurs.
+        PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
+        // PDO::ERRMODE_EXCEPTION => true,
       ]);
     } catch (PDOException $e) {
       echo $e->getMessage();
@@ -60,9 +57,9 @@ class Database
   /**
    * Execute a query
    * 
-   * @param string $query
+   * @param string $sql
    */
-  public function executeQuery(string $sql): array|false
+  public function executeQuery(string $sql): array|string|false
   {
     try {
       $this->stmt = $this->getInstance()->prepare($sql);

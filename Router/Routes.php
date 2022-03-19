@@ -1,6 +1,16 @@
 <?php
 
+/**
+ * @var Router\Router $router
+ */
+
+use Source\Renderer;
+
 $router->register('/', ['Controllers\HomeController', 'index']);
+
+$router->register('/test', function () {
+  return Renderer::make('/home/index');
+});
 
 $router->register('/users/index', ['Controllers\UserController', 'index']);
 $router->register('/users/create', ['Controllers\UserController', 'create']);

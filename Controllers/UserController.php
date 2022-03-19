@@ -12,7 +12,7 @@ class UserController
    *
    * @return Source\Renderer
    */
-  static public function index()
+  static public function index(): Renderer
   {
     $users = new UserModel();
     $data = [
@@ -27,7 +27,7 @@ class UserController
    *
    * @return Source\Renderer
    */
-  static public function create()
+  static public function create(): Renderer
   {
     return Renderer::make('user/create');
   }
@@ -48,7 +48,7 @@ class UserController
    * @param  int  $id
    * @return Source\Renderer
    */
-  static public function show($id)
+  static public function show($id): Renderer
   {
     $user = new UserModel();
     var_dump($user);
@@ -65,7 +65,7 @@ class UserController
    * @param  int  $id
    * @return Source\Renderer
    */
-  static public function edit($id)
+  static public function edit($id): Renderer
   {
     $user = new UserModel();
     $data = [
@@ -81,7 +81,7 @@ class UserController
    * @param  int  $id
    * @return Source\Renderer
    */
-  static public function update($id)
+  static public function update($id): Renderer
   {
     $user = new UserModel();
     $data = [
@@ -97,7 +97,7 @@ class UserController
    * @param  int  $id
    * @return Source\Renderer
    */
-  static public function destroy($id)
+  static public function destroy($id): Renderer
   {
     $user = new UserModel();
     $user->delete($id);

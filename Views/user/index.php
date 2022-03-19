@@ -16,7 +16,7 @@
         <td><?= $user['name'] ?></td>
         <td><?= $user['email'] ?></td>
         <td>
-          <form action="/users/<?= $user['id'] ?>/delete" method="post">
+          <form action="/users/<?= $user['id'] ?>/delete" method="POST">
             <button class="bg-red white" type="submit">DELETE</button>
           </form>
         </td>
