@@ -2,7 +2,7 @@
     "name": "alexisvs/php_simple_crud",
     "autoload": {
         "psr-4": {
-            "Alexisvs\\PhpSimpleCrud\\": "Public/",
+            "Alexisvs\\PhpSimpleCrud\\": "public/",
             "Class\\": "Class/",
             "Public\\": "Views/",
             "Router\\": "Router/",

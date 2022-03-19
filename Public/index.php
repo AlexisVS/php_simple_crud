@@ -10,7 +10,7 @@ require './../vendor/autoload.php';
 
 $router = new Router();
 
-include './../Router/Routes.php'
+include './../Router/Routes.php';
 
 ?>
 <!DOCTYPE html>

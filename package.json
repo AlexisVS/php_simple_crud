@@ -6,7 +6,7 @@
     "tailwindcss": "^3.0.23"
   },
   "scripts": {
-    "dev": "postcss ./node_modules/tailwindcss/tailwind.css -o ./Public/css/tailwind.css",
-    "watch": "postcss ./node_modules/tailwindcss/tailwind.css -o ./Public/css/tailwind.css -w"
+    "dev": "postcss ./node_modules/tailwindcss/tailwind.css -o ./public/css/tailwind.css",
+    "watch": "postcss ./node_modules/tailwindcss/tailwind.css -o ./public/css/tailwind.css -w"
   }
 }
