@@ -91,7 +91,7 @@ class Router
     if (class_exists($className) && method_exists($className, $method)) {
       $class = new $className();
       if ($uriParameters == null || count($uriParameters) == 0) {
-        return call_user_func([$class, $method], []);
+        return call_user_func_array([$class, $method], []);
       } else {
         return call_user_func_array([$class, $method], $uriParameters);
       }
@@ -127,7 +127,7 @@ class Router
   {
     // var_dump($uri);
     Helper::beautifful_print($this->routes);
-    
+
     // Resolve Uri and split uri and the query string
     $path = $this->resolveUri($uri);
 
