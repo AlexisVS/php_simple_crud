@@ -9,6 +9,9 @@ use Source\Renderer;
 
 class UserController
 {
+  public function __construct(public \Router\Router $router)
+  {
+  }
   /**
    * Display a listing of the resource.
    *
@@ -42,11 +45,11 @@ class UserController
   static public function store()
   {
     $store = new UserModel();
-    
+
     // Totally stupid for security reason but this is a training project so ...
     $store->store($_POST);
 
-    header('Location:' . Constant::PUBLIC_PATH . '/users/index');
+    return self::index();
   }
 
   /**
@@ -55,7 +58,7 @@ class UserController
    * @param  int  $id
    * @return Source\Renderer
    */
-  static public function show($id): Renderer
+  static public function show($id): mixed
   {
     $user = new UserModel();
     $data = [
@@ -63,6 +66,7 @@ class UserController
     ];
 
     return Renderer::make('user/show', $data);
+    // Helper::beautifful_print($data);
   }
 
   /**
@@ -87,14 +91,12 @@ class UserController
    * @param  int  $id
    * @return Source\Renderer
    */
-  static public function update($id): Renderer
+  static public function update($id)
   {
     $user = new UserModel();
-    $data = [
-      'user' => $user->find($id),
-    ];
+    $user->update($id, $_POST);
 
-    return Renderer::make('user/show', $data);
+    return Self::show($id);
   }
 
   /**
@@ -103,11 +105,11 @@ class UserController
    * @param  int  $id
    * @return Source\Renderer
    */
-  static public function destroy($id): Renderer
+  static public function destroy($id)
   {
     $user = new UserModel();
     $user->delete($id);
 
-    return Renderer::make('user/index');
+    return self::index();
   }
 }

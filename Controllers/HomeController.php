@@ -15,7 +15,7 @@ class HomeController
    */
   static public function index(): Renderer
   {
-    $user = new UserModel;
+    $user = new UserModel();
     $data = [
       'user' => $user->find(1),
       'users' => $user->all()

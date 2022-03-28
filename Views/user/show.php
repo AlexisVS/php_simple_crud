@@ -1,8 +1,8 @@
 <?php
 
-use Source\Helper;
-
 ?>
+
+
 
 <h1>show user</h1>
 <h2><b>Id:</b><?= $user['id'] ?></h2>

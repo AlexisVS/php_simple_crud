@@ -4,6 +4,7 @@ namespace Models;
 
 use PDO;
 use Source\Database;
+use Source\Helper;
 
 class Model
 {
@@ -40,7 +41,7 @@ class Model
     }
     if (is_integer($id)) {
       $sql = "SELECT * FROM $this->tableName WHERE id = $id";
-      // [0] for delete an useless array
+      // [0] for delete a useless array
       return $this->db->executeQuery($sql)[0];
     }
   }
@@ -81,14 +82,40 @@ class Model
    * Store a new row in table
    * 
    * @param array $model
-   * @return array
+   * @return string
    */
-  public function store($model) {
-    $modelKeys = array_keys($model);
-    $modelValue = array_values($model);
+  public function store($model): string
+  {
+    $modelKeys = implode(', ', array_keys($model));
+    $modelValue = implode(', ', array_map(function ($item) {
+      return "'" . $item . "'";
+    }, array_values($model)));
 
     $sql = "INSERT INTO $this->tableName ($modelKeys) VALUES ($modelValue)";
+
     $this->db->executeQuery($sql);
+
     return "The elemenet has been added.";
+  }
+
+  /**
+   * Update the selected riw in the table
+   * 
+   * @param int $id
+   * @param array $model
+   */
+  public function update($id, $model)
+  {
+    $modelSql = [];
+    foreach ($model as $key => $value) {
+      array_push($modelSql, $key . '=' . "'" . $value . "'");
+    }
+
+
+    $modelSql = implode(', ', $modelSql);
+
+    $sql = "UPDATE $this->tableName SET $modelSql WHERE id = $id";
+
+    return $this->db->executeQuery($sql);
   }
 }

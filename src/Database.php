@@ -66,7 +66,7 @@ class Database
       $this->stmt->execute();
       return $this->stmt->fetchAll();
     } catch (PDOException $e) {
-      $e->getMessage();
+      Helper::beautifful_print($e->getMessage());
     }
   }
 

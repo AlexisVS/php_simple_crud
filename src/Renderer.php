@@ -4,8 +4,10 @@ namespace Source;
 
 class Renderer
 {
-  public function __construct(private string $viewPath, private ?array $data)
-  {
+  public function __construct(
+    private string $viewPath,
+    private ?array $data
+  ) {
   }
 
   /**
@@ -14,7 +16,6 @@ class Renderer
   public function view(): string|false
   {
     ob_start();
-
     if (isset($this->data)) {
       extract($this->data);
     }

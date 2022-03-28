@@ -15,7 +15,13 @@
         <td><?= $user['id'] ?></td>
         <td><?= $user['name'] ?></td>
         <td><?= $user['email'] ?></td>
-        <td>
+        <td style="display:flex;">
+          <form action= method="POST">
+            <a href="/users/<?= $user['id'] ?>" class="bg-blue white border" type="submit">SHOW</a>
+          </form>
+          <form action="/users/<?= $user['id'] ?>/edit" method="POST" style="margin: 0 4px">
+            <button class="bg-green white" type="submit">EDIT</button>
+          </form>
           <form action="/users/<?= $user['id'] ?>/delete" method="POST">
             <button class="bg-red white" type="submit">DELETE</button>
           </form>

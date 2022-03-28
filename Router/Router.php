@@ -33,6 +33,28 @@ class Router
   }
 
   /**
+   * Resolve the uri and launch the action
+   * 
+   * @param string $uri
+   * @return mixed
+   */
+  public function resolve(string $uri): mixed
+  {
+
+    // Resolve Uri and split uri and the query string
+    $path = $this->resolveUri($uri);
+
+    // Get on the uri the parameters
+    $uriParameters = $this->getUriParameters($uri);
+
+    // Define if action is correct
+    $action = $this->defineAction($path, $uriParameters);
+
+    // Execute action
+    return $this->executeAction($action, $uriParameters);
+  }
+
+  /**
    * Resolve Uri and split uri and the query string
    * 
    * @param string $uri
@@ -48,17 +70,17 @@ class Router
    * Get on the uri the parameters and return it
    * 
    * @param string $uri
-   * @return array $parameters
+   * @return array $uriParameters
    */
   private function getUriParameters(string $uri): array
   {
-    $parameters = [];
+    $uriParameters = [];
 
     if (preg_match_all('/\d+/', $uri, $matches)) {
-      $parameters = $matches[0];
+      $uriParameters = $matches[0];
     }
 
-    return $parameters;
+    return $uriParameters;
   }
 
   /**
@@ -75,6 +97,25 @@ class Router
       $action = $this->routes[$path] ?? null;
     }
     return $action;
+  }
+
+  /**
+   * Execute the actions
+   * 
+   * @param mixed $action
+   * @param array $uriParameters
+   * @return mixed
+   */
+  public function executeAction(mixed $action, array $uriParameters): mixed
+  {
+
+    if (is_callable($action)) {
+      return $action(...$uriParameters);
+    }
+    if (is_array($action)) {
+      return self::defineActionArrayForExecuteAction($action, $uriParameters);
+    }
+    return new RouteNotFoundException();
   }
 
   /**
@@ -97,45 +138,5 @@ class Router
       }
     }
     return new RouteNotFoundException();
-  }
-
-  /**
-   * Execute the actions
-   * 
-   * @param mixed $action
-   * @param array $uriParameters
-   * @return mixed
-   */
-  private function executeAction(mixed $action, array $uriParameters): mixed
-  {
-    if (is_callable($action)) {
-      return $action(...$uriParameters);
-    }
-    if (is_array($action)) {
-      return $this->defineActionArrayForExecuteAction($action, $uriParameters);
-    }
-    return new RouteNotFoundException();
-  }
-
-  /**
-   * Resolve the uri and launch the function
-   * 
-   * @param string $uri
-   * @return mixed
-   */
-  public function resolve(string $uri): mixed
-  {
-
-    // Resolve Uri and split uri and the query string
-    $path = $this->resolveUri($uri);
-
-    // Get on the uri the parameters
-    $uriParameters = $this->getUriParameters($uri);
-
-    // Define if action is correct
-    $action = $this->defineAction($path, $uriParameters);
-
-    // Execute action
-    return $this->executeAction($action, $uriParameters);
   }
 }
