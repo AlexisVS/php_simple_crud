@@ -22,7 +22,6 @@ class Renderer
 
     require Constant::BASE_VIEW_PATH . $this->viewPath . '.php';
 
-
     return ob_get_clean();
   }
 

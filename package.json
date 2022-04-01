@@ -8,5 +8,8 @@
   "scripts": {
     "dev": "postcss ./node_modules/tailwindcss/tailwind.css -o ./public/css/tailwind.css",
     "watch": "postcss ./node_modules/tailwindcss/tailwind.css -o ./public/css/tailwind.css -w"
+  },
+  "devDependencies": {
+    "postcss-import": "^14.1.0"
   }
 }
