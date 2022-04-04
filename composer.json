@@ -10,7 +10,9 @@
             "Controllers\\": "Controllers/",
             "Source\\": "src/",
             "Exceptions\\": "Exceptions/",
-            "Models\\": "Models/"
+            "Models\\": "Models/",
+            "Test\\": "Test/",
+            "Traits\\": "Traits/"
         }
     },
     "authors": [

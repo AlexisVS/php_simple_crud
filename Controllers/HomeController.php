@@ -3,6 +3,7 @@
 namespace Controllers;
 
 use Models\UserModel;
+use Source\Database;
 use Source\Renderer;
 
 class HomeController
@@ -15,11 +16,6 @@ class HomeController
    */
   static public function index(): Renderer
   {
-    $user = new UserModel();
-    $data = [
-      'user' => $user->find(1),
-      'users' => $user->all()
-    ];
-    return Renderer::make('home/index', $data);
+    return Renderer::make('home/index');
   }
 }

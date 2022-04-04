@@ -112,4 +112,16 @@ class UserController
 
     return self::index();
   }
+
+  static public function connexion()
+  {
+    return Renderer::make("authentication/connexion");
+  }
+
+  static public function login()
+  {
+    $user = new UserModel();
+    $user->login($_POST);
+    return self::index();
+  }
 }

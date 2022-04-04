@@ -20,7 +20,7 @@ class Model
 
   public function __construct()
   {
-    $this->db = new Database();
+    $this->db = new Database;
   }
 
   /**
@@ -41,6 +41,7 @@ class Model
     }
     if (is_integer($id)) {
       $sql = "SELECT * FROM $this->tableName WHERE id = $id";
+
       // [0] for delete a useless array
       return $this->db->executeQuery($sql)[0];
     }
@@ -116,6 +117,21 @@ class Model
 
     $sql = "UPDATE $this->tableName SET $modelSql WHERE id = $id";
 
+    return $this->db->executeQuery($sql);
+  }
+
+  /**
+   * Opere a where stataement in the table
+   * 
+   * @param string $colName
+   * @param string $operator
+   * @param string|int $value
+   * 
+   * @return array|string|false
+   */
+  public function where(string $colName, string $operator, string | int $value)
+  {
+    $sql = "SELECT * FROM $this->tableName WHERE $colName $operator $value";
     return $this->db->executeQuery($sql);
   }
 }

@@ -8,3 +8,4 @@
 <h2><b>Id:</b><?= $user['id'] ?></h2>
 <h2><b>Name:</b><?= $user['name'] ?></h2>
 <h2><b>Email:</b><?= $user['email'] ?></h2>
+<h2><b>Email:</b><?= $user['password'] ?></h2>

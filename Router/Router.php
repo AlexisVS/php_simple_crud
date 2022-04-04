@@ -40,7 +40,6 @@ class Router
    */
   public function resolve(string $uri): mixed
   {
-
     // Resolve Uri and split uri and the query string
     $path = $this->resolveUri($uri);
 
@@ -113,7 +112,7 @@ class Router
       return $action(...$uriParameters);
     }
     if (is_array($action)) {
-      return self::defineActionArrayForExecuteAction($action, $uriParameters);
+      return self::defineActionArray($action, $uriParameters);
     }
     return new RouteNotFoundException();
   }
@@ -125,7 +124,7 @@ class Router
    * @param array $uriParameters
    * @return mixed $action
    */
-  private function defineActionArrayForExecuteAction(array $action, array $uriParameters): mixed
+  private function defineActionArray(array $action, array $uriParameters): mixed
   {
     [$className, $method] = $action;
 

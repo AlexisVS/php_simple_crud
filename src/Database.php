@@ -55,6 +55,18 @@ class Database
   }
 
   /**
+   * execute a query statically
+   * 
+   * @param string $sql
+   * 
+   * @return array | string | false
+   */
+  public static function query ($sql) {
+    $db = new self();
+    return $db->executeQuery($sql);
+  }
+
+  /**
    * Execute a query
    * 
    * @param string $sql
